@@ -211,7 +211,7 @@ app.get('/cuisine',(req,res)=>{
 //connecton with mongo server
 MongoClient.connect(mongourl,(err,connection)=>{
     if(err) console.log(err);
-    db=connection.db('edunov');
+    db = connection.db('edunov');
 
     app.listen(port,(err)=>{
         if(err) throw err;
