@@ -106,6 +106,10 @@ app.get('/rest',(req,res)=>{
     else if(req.query.city){
         condition = {city:req.query.city}
     }
+    //get rest on basis of restid
+    else if(req.query._id){
+        condition={_id:req.query._id}
+    }
     db.collection('restaurant').find(condition).toArray((err,result)=>{
         if(err) throw err;
         res.send(result);
