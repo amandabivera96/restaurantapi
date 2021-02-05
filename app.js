@@ -88,19 +88,19 @@ app.get('/rest',(req,res)=>{
     var condition={};
     //get rest on basis of meal + cost
     if(req.query.mealtype && req.query.lcost && req.query.hcost){
-        condition = {$and:[{"type.name":req.query.mealtype},{cost:{$lt:Number(req.query.hcost),$gt:Number(req.query.lcost)}}]}
+        condition = {$and:[{"type.mealtype":req.query.mealtype},{cost:{$lt:Number(req.query.hcost),$gt:Number(req.query.lcost)}}]}
     }
     //get rest on basis of meal + city
     else if(req.query.mealtype && req.query.city){
-        condition = {$and:[{"type.name":req.query.mealtype},{city:req.query.city}]}
+        condition = {$and:[{"type.mealtype":req.query.mealtype},{city:req.query.city}]}
     }
     //get rest on basis of meal + cuisine
     else if(req.query.mealtype && req.query.cuisine){
-        condition = {$and:[{"type.name":req.query.mealtype},{"Cuisine.name":req.query.cuisine}]}
+        condition = {$and:[{"type.mealtype":req.query.mealtype},{"Cuisine.cuisine":req.query.cuisine}]}
     }
     //get rest on basis of meal
     else if(req.query.mealtype){
-        condition = {"type.name":req.query.mealtype}
+        condition = {"type.mealtype":req.query.mealtype}
     }
     //get rest on basis of city
     else if(req.query.city){
