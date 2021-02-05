@@ -75,9 +75,9 @@ app.get('/city',(req,res) =>{
 });
 
 //rest per city
-app.get('/rest/:name',(req,res) =>{
-    var name=req.params.name;
-    db.collection('restaurant').find({city_name:name}).toArray((err,result)=>{
+app.get('/rest/:id',(req,res) =>{
+    var id=req.params.id;
+    db.collection('restaurant').find({city:id}).toArray((err,result)=>{
         if(err) throw err;
         res.send(result);
     });
