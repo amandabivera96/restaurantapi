@@ -74,10 +74,10 @@ app.get('/city',(req,res) =>{
     });
 });
 
-//rest per city
+//rest details
 app.get('/rest/:id',(req,res) =>{
     var id=req.params.id;
-    db.collection('restaurant').find({city:id}).toArray((err,result)=>{
+    db.collection('restaurant').find({_id:id}).toArray((err,result)=>{
         if(err) throw err;
         res.send(result);
     });
@@ -105,10 +105,6 @@ app.get('/rest',(req,res)=>{
     //get rest on basis of city
     else if(req.query.city){
         condition = {city:req.query.city}
-    }
-    //get rest on basis of restid
-    else if(req.query._id){
-        condition={_id:req.query._id}
     }
     db.collection('restaurant').find(condition).toArray((err,result)=>{
         if(err) throw err;
@@ -151,10 +147,10 @@ app.put('/updateorder',(req,res) => {
         {_id:id},
         {
             $set:{
-                mealtype:req.body.mealtype,
-                cuisine:req.body.cuisine,
-                cost:req.body.cost,
-                uname:req.body.uname
+                Restaurant:req.body.Restaurant,
+                Name:req.body.name,
+                Phone:req.body.phone,
+                Address:req.body.address
             }
         },(err,result) => {
             if(err) throw err;
