@@ -86,8 +86,20 @@ app.get('/rest/:id',(req,res) =>{
 //restaurant route
 app.get('/rest',(req,res)=>{
     var condition={};
+    let sortcondition = {cost:1};
+    let limit=10;
+    //get rest on basis of sorted cost
+    if(req.query.mealtype && req.query.sort){
+    condition = {"type.mealtype":req.query.mealtype}
+    sortcondition = {cost:Number(req.query.sort)}
+    }
+    //get rest on basis of meal + pagination
+    else if(req.query.mealtype && req.query.limit){
+    condition = {"type.mealtype":req.query.mealtype}
+    limit = Number(req.query.limit);
+    }
     //get rest on basis of meal + cost
-    if(req.query.mealtype && req.query.lcost && req.query.hcost){
+    else if(req.query.mealtype && req.query.lcost && req.query.hcost){
         condition = {$and:[{"type.mealtype":req.query.mealtype},{cost:{$lt:Number(req.query.hcost),$gt:Number(req.query.lcost)}}]}
     }
     //get rest on basis of meal + city
@@ -106,7 +118,7 @@ app.get('/rest',(req,res)=>{
     else if(req.query.city){
         condition = {city:req.query.city}
     }
-    db.collection('restaurant').find(condition).toArray((err,result)=>{
+    db.collection('restaurant').find(condition).sort(sortcondition).limit(limit).toArray((err,result)=>{
         if(err) throw err;
         res.send(result);
     });
